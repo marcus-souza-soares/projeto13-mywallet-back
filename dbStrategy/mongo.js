@@ -1,15 +1,15 @@
-import { MongoClient, MongoClient, ObjectId } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import dotenv from 'dotenv';
-import { ObjectID } from 'bson';
+
 
 dotenv.config();
 
-const MongoClient = new MongoClient(process.env.Mongo_URI);
+const mongoClient = new MongoClient(process.env.MONGO_URI);
 let db;
-MongoClient.connect(() => {
-    db = MongoClient.db(process.env.MONGO_DATABASE);
+mongoClient.connect(() => {
+    db = mongoClient.db(process.env.MONGO_DATABASE);
 });
 
-const ObjectId = ObjectID;
+const objectId = ObjectId;
 
-export { db, ObjectId };
+export { db, objectId };
