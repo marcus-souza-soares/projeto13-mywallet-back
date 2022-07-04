@@ -1,6 +1,7 @@
 import { db } from '../dbStrategy/mongo.js'
 import joi from 'joi';
 import dayjs from 'dayjs';
+import { ObjectId } from 'mongodb';
 
 export async function orderGet(req, res) {
 
@@ -33,12 +34,17 @@ export async function createOrder(req, res) {
     res.status(201).send(ordersList);
 }
 export async function deleteOrder(req, res){
-    const { _id, userId } = req.body;
-
+    const order = req.body;
+    console.log(order)
     try {
-        await db.collection("wallets").deleteOne({_id})
-        const listOrders = await db.collection("wallets").find({ userId }).toArray();
-        res.status(201).send(listOrders);
+        await db.collection("wallets").deleteOne(order)
+        console.log()
+        const ordersList = await db
+        .collection('wallets')
+        .find({ userId: order.userId })
+        .toArray();
+        console.log(ordersList)
+        return res.status(201).send(ordersList);
     } catch (error) {
         res.status(401).send(error);
     }

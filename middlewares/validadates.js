@@ -4,8 +4,6 @@ import joi from "joi";
 //Para validações de usuário e do token
 export async function validateUser(req, res, next) {
     const { authorization } = req.headers;
-    console.log(authorization)
-    console.log(req.body)
     const token = authorization?.replace('Bearer ', '');
     const session = await db.collection('sessions').findOne({ token });
     if(!session){
