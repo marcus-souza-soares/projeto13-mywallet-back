@@ -5,11 +5,12 @@ import joi from "joi";
 export async function validateUser(req, res, next) {
     const { authorization } = req.headers;
     console.log(authorization)
+    console.log(req.body)
     const token = authorization?.replace('Bearer ', '');
     const session = await db.collection('sessions').findOne({ token });
-    // if(!session){
-    //     return res.sendStatus(409);
-    // }
+    if(!session){
+        return res.sendStatus(409);
+    }
     res.locals.session = session;
     next();
 }
@@ -58,15 +59,5 @@ export async function validateLogin(req, res, next){
         return res.status(404).send(error.details);
     }
     next();
-}
-
-export function validateOrder(req, res, next){
-    const order = req.body;
-    const { authorization } = req.headers;
-    const token = authorization?.replace('Bearer ', '');
-
-    const orderSchema = joi.object({
-
-    })
 }
 
