@@ -37,12 +37,13 @@ export async function deleteOrder(req, res){
     const order = req.body;
     console.log(order)
     const id = order._id;
+    const userId = order.userId
     try {
         await db.collection("wallets").deleteOne({ _id: new ObjectId(id) })
         console.log()
         const ordersList = await db
         .collection('wallets')
-        .find({ userId: new ObjectId(order.userId) })
+        .find({ userId: new ObjectId(userId) })
         .toArray();
         console.log(ordersList)
         return res.status(201).send(ordersList);
