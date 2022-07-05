@@ -36,12 +36,13 @@ export async function createOrder(req, res) {
 export async function deleteOrder(req, res){
     const order = req.body;
     console.log(order)
+    const id = order._id;
     try {
-        await db.collection("wallets").deleteOne(order)
+        await db.collection("wallets").deleteOne({ _id: new ObjectId(id) })
         console.log()
         const ordersList = await db
         .collection('wallets')
-        .find({ userId: order.userId })
+        .find({ userId: new ObjectId(order.userId) })
         .toArray();
         console.log(ordersList)
         return res.status(201).send(ordersList);
